@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12 col-lg-7">
         <div class="row">
-          <div v-for='curso in cursos' class="col-12 col-sm-6">
+          <div v-for='curso in cursos' :key="curso.id" class="col-12 col-sm-6">
             <Card :curso='curso'></Card>
           </div>
         </div>
@@ -32,7 +32,7 @@
                   <div class="form-group">
                     <select class="form-control border-primary" id="curso">
                       <option selected>Cursos</option>
-                      <option v-for='curso in cursos'>{{curso.nombre}}</option>
+                      <option v-for='curso in cursos' :key="curso.id">{{curso.nombre}}</option>
                     </select>
                   </div>
                   <div class="form-group form-check">
