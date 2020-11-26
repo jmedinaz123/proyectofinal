@@ -1,0 +1,60 @@
+{
+    "cursos": [
+        {
+            "id": "A121",
+            "nombre": "Desarrollo Front-End",
+            "precio": 1700,
+            "precioOferta": 0,
+            "imageUrl": ""
+        },
+        {
+            "id": "A122",
+            "nombre": "Desarrollo Back-End",
+            "precio": 1700,
+            "precioOferta": 0,
+            "imageUrl": ""
+        },
+        {
+            "id": "A123",
+            "nombre": "Desarrollo de Aplicativos Móviles",
+            "precio": 1700,
+            "precioOferta": 1200,
+            "imageUrl": "./../assets/Front-End.png"
+        },
+        {
+            "id": "A124",
+            "nombre": "Diseño de Experiencia de Usuario",
+            "precio": 1700,
+            "precioOferta": 1200,
+            "imageUrl": ""
+        },
+        {
+            "id": "A125",
+            "nombre": "Desarrollo de Videojuegos",
+            "precio": 1700,
+            "precioOferta": 1200,
+            "imageUrl": ""
+        },
+        {
+            "id": "A126",
+            "nombre": "Marketing Digital",
+            "precio": 1700,
+            "precioOferta": 1200,
+            "imageUrl": ""
+        },
+        {
+            "id": "A127",
+            "nombre": "Data Analytics",
+            "precio": 1700,
+            "precioOferta": 1200,
+            "imageUrl": ""
+        },
+        {
+            "id": "A128",
+            "nombre": "Desarrollo Front-End Avanzado",
+            "precio": 1700,
+            "precioOferta": 1200,
+            "imageUrl": ""
+        }
+    ]
+}
