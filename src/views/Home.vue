@@ -1,7 +1,13 @@
 <template>
-  <div>
-    <div class="row">
+  <div>   
+    <Header />
+    <div class="row px-5">
       <div class="col-12 col-lg-7">
+        <div class="row">
+          <div class="col-12 pt-3 text-left font-weight-bold">
+            <span>Conoce nuestros Programas de Especialización</span>
+          </div>
+        </div>
         <div class="row">
           <div v-for='curso in cursos' :key="curso.id" class="col-12 col-sm-6">
             <Card :curso='curso'></Card>
@@ -64,11 +70,13 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import Header from './../components/Header.vue';
 import Card from './../components/Card.vue';
 
 export default {
   name: 'Home',
   components: {
+    Header,
     Card
   },
   methods: {
