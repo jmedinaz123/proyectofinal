@@ -33,28 +33,28 @@
             "nombre": "Desarrollo de Videojuegos",
             "precio": 1700,
             "precioOferta": 1200,
-            "imageUrl": "./../assets/Front-End.png"
+            "imageUrl": "/assets/Front-End.png"
         },
         {
             "id": "A126",
             "nombre": "Marketing Digital",
             "precio": 1700,
             "precioOferta": 1200,
-            "imageUrl": "./../assets/Front-End.png"
+            "imageUrl": "/assets/Front-End.png"
         },
         {
             "id": "A127",
             "nombre": "Data Analytics",
             "precio": 1700,
             "precioOferta": 1200,
-            "imageUrl": "./../assets/Front-End.png"
+            "imageUrl": "/assets/Front-End.png"
         },
         {
             "id": "A128",
             "nombre": "Desarrollo Front-End Avanzado",
             "precio": 1700,
             "precioOferta": 1200,
-            "imageUrl": "./../assets/Front-End.png"
+            "imageUrl": "/assets/Front-End.png"
         }
     ]
 }
