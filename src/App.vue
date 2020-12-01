@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="bg-white shadow">
+    <div class="bg-white">
       <router-view/>
     </div>
   </div>

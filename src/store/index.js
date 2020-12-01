@@ -7,8 +7,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    beneficios: [],
     cursos: [],
-    cursosSeleccionados: []
+    cursosSeleccionados: [],
   },
   mutations: {
     agregarCursoMutation(state, payload) {
@@ -18,7 +19,7 @@ export default new Vuex.Store({
           icon: 'error',
           title: 'No se pudo añadir el programa porque ya ha sido añadido anteriormente',
           showConfirmButton: false,
-          timer: 1500
+          timer: 2000
         })
       }
       else {
@@ -28,9 +29,12 @@ export default new Vuex.Store({
           icon: 'success',
           title: 'El programa se añadió correctamente',
           showConfirmButton: false,
-          timer: 1500
+          timer: 2000
         })
       }
+    },
+    getBeneficiosMutation(state, payload){
+      state.beneficios = payload;
     },
     getCursosMutation(state, payload) {
       state.cursos = payload;
@@ -43,9 +47,8 @@ export default new Vuex.Store({
     createInscripcionAction({commit}, inscripcion) {
       db.collection('inscripciones').add({
         nombres: inscripcion.nombres,
-        apellidos: inscripcion.apellidos,
         email: inscripcion.email,
-        telefonocelular: inscripcion.telefonocelular,
+        celular: inscripcion.celular,
         curso_id: inscripcion.curso_id
       }).then(() => {
         Swal.fire({
@@ -59,6 +62,16 @@ export default new Vuex.Store({
           title: 'Lo sentimos, se produjo un error'
         })
       });
+    },
+    getBeneficiosAction({commit}) {
+      const beneficios = [];
+      db.collection('Beneficios').orderBy('nombre').get()
+      .then(res => {
+        res.forEach(doc => {
+          beneficios.push(doc.data());
+          commit('getBeneficiosMutation', beneficios);
+        })
+      })
     },
     getCursosAction({commit}) {
       const cursos = [];
