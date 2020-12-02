@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     beneficios: [],
     cursos: [],
-    cursosSeleccionados: [],
+    cursosSeleccionados: []
   },
   mutations: {
     agregarCursoMutation(state, payload) {
@@ -24,6 +24,8 @@ export default new Vuex.Store({
       }
       else {
         state.cursosSeleccionados.push(payload);
+        window.localStorage.setItem('cursosSeleccionados', JSON.stringify(state.cursosSeleccionados));
+        console.log(window.localStorage.getItem('cursosSeleccionados'));
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -38,6 +40,12 @@ export default new Vuex.Store({
     },
     getCursosMutation(state, payload) {
       state.cursos = payload;
+    },
+    getCursosSeleccionadosMutation(state) {
+      const cursosSeleccionados = window.localStorage.getItem('cursosSeleccionados');
+      if (cursosSeleccionados !== null) {
+        state.cursosSeleccionados = JSON.parse(cursosSeleccionados);
+      }
     }
   },
   actions: {
@@ -85,6 +93,25 @@ export default new Vuex.Store({
           commit('getCursosMutation', cursos);
         })
       })
+    },
+    getCursosSeleccionadosAction({commit}) {
+      commit('getCursosSeleccionadosMutation');
+    },
+    setFunctionScrollAction({commit}) {
+      window.onscroll = function() {
+        scrollFunction();
+      };
+
+      function scrollFunction() {
+        let navbar = document.getElementById("navbar");
+          if (document.body.scrollTop > 90 || document.documentElement.scrollTop > 90) {
+            navbar.classList.remove('bg-transparent');
+            navbar.classList.add('bg-dark-pachaqtec');
+          } else {
+            navbar.classList.remove('bg-dark-pachaqtec');
+            navbar.classList.add('bg-transparent');
+          }
+      }
     }
   },
   modules: {

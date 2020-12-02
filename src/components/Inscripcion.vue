@@ -5,14 +5,14 @@
           <div class="row">
             <div class="col-12">
               <div class="d-flex justify-content-end align-items-end">
-                <div id="FrmInscripcion" class="aero p-5 mb-5"> 
+                <div id="FrmInscripcion" class="aero-form p-0 p-lg-5 mb-5 mr-lg-2"> 
                     <div class="pt-4 px-4 text-center font-weight-bold mt-2">
                         Postula y obtén un 10% de descuento en el programa
                     </div>
-                    <div class="px-4 pt-2 mx-1">
+                    <div class="px-0 px-md-4 pt-2 mx-1">
                         <form @submit.prevent='inscribir({nombres: nombres, email: email, celular: celular, curso_id: curso_id, terminos: terminos})'>
                             <div class="form-group my-2">
-                                <input type="text" class="form-control rounded py-4" id="nombre" v-model="nombre" placeholder="NOMBRE">
+                                <input type="text" class="form-control rounded py-4" id="nombres" v-model="nombres" placeholder="NOMBRE">
                             </div>        
                             <div class="form-group my-2">
                                 <input type="text" class="form-control rounded py-4" id="celular" v-model="celular" placeholder="CELULAR">
@@ -33,11 +33,14 @@
                                 </label>
                             </div>
                             <div class="form-group mt-3 pt-3">
-                                <button type='submit' class="btn btn-block btn-primary py-2">Quiero Postular</button>
+                                <button type='submit' class="btn btn-block btn-primary bg-violet py-2">Quiero Postular</button>
                             </div>
                         </form>
                     </div>
-                </div>    
+                </div>
+                <div class="d-none d-lg-inline-block aero-button">
+                  <ButtonWhatsapp />
+                </div>
               </div>
             </div>
           </div>
@@ -48,8 +51,14 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import Swal from 'sweetalert2';
+import ButtonWhatsapp from './../components/ButtonWhatsapp.vue';
+
 export default {
   name: 'Inscripcion', 
+  components: {
+    ButtonWhatsapp
+  },
   data() {
     return {
         nombres: '',
@@ -63,7 +72,7 @@ export default {
       ...mapState(['cursos'])
   },
   methods: {
-    ...mapActions(['createInscripcionAction']),
+    ...mapActions(['createInscripcionAction', 'setInscripcionLimpiarAction']),
     inscribir(inscripcion) {
       
       let validaciones = '';
@@ -92,29 +101,38 @@ export default {
 
 
       this.createInscripcionAction(inscripcion);
+      this.limpiar();
+    },
+    limpiar() {     
       this.nombres = '';
       this.email = '';
       this.celular = '';
       this.curso_id = '';
-      this.terminos = false;          
+      this.terminos = false;
     }
-  }
+  },
 }
 </script>
 
 <style>
-.aero {
+.aero-form {
     position: fixed;
     max-width: 370px;
+    min-width: 370px;
     top: 100px;    
     background-image: url('/assets/FormMovil.svg');
 }
+.aero-button {
+  position: fixed;
+  top: 615px;    
+}
 
 @media screen and (max-width: 992px) {
-    .aero{
+    .aero-form{
         background-image: none;
         position: relative;
         max-width: none;
+        min-width: none;
         width: 100%;
         top: 0;
     }
