@@ -24,30 +24,3 @@ export default {
  name: 'BannerComunidad'
 }
 </script>
-
-<style>
-    .bg-violet {
-        background: #5640ff;
-    }
-
-    .banner-image {
-        margin-left: -210px;
-        margin-top: -130px;
-        margin-bottom: -170px;
-    }
-    .text-parrafo {
-        font-size: 0.8rem;
-        font-weight: normal;
-    }
-
-    
-
-@media screen and (max-width: 992px) {
-    .banner-image{
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: -185px;
-        margin-bottom: 1rem;
-    }
-};
-</style>

@@ -9,11 +9,17 @@ export default new Vuex.Store({
   state: {
     beneficios: [],
     cursos: [],
-    cursosSeleccionados: []
+    carrito: {
+      cursos: [],
+      descuentos: [],
+      totalCursos: 0,
+      totalDescuestos: 0,
+      totalGeneral: 0
+    },
   },
   mutations: {
-    agregarCursoMutation(state, payload) {
-      if (state.cursosSeleccionados.filter(c => c.id === payload.id).length > 0) {
+    agregarCarritoCursoMutation(state, payload) {
+      if (state.carrito.cursos.filter(c => c.id === payload.id).length > 0) {
         Swal.fire({
           position: 'top-end',
           icon: 'error',
@@ -23,9 +29,11 @@ export default new Vuex.Store({
         })
       }
       else {
-        state.cursosSeleccionados.push(payload);
-        window.localStorage.setItem('cursosSeleccionados', JSON.stringify(state.cursosSeleccionados));
-        console.log(window.localStorage.getItem('cursosSeleccionados'));
+        state.carrito.cursos.push(payload);
+        state.carrito.totalCursos = state.carrito.cursos.reduce((a, b) => a + b.precioActual, 0);
+        state.carrito.totalGeneral = state.carrito.totalCursos - state.carrito.totalDescuentos;
+        window.localStorage.setItem('carrito', JSON.stringify(state.carrito));
+        
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -35,22 +43,87 @@ export default new Vuex.Store({
         })
       }
     },
+    agregarCarritoDescuentoMutation(state, payload) {
+      if (state.carrito.cursos.filter(c => c.id === payload.id).length > 0) {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'No se pudo añadir el código de descuento porque ya ha sido añadido anteriormente',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+      else {
+        state.carrito.descuentos.push(payload);
+        state.carrito.totalDescuentos = state.carrito.descuentos.reduce((a, b) => a + b.descuento, 0);
+        state.carrito.totalGeneral = state.carrito.totalCursos - state.carrito.totalDescuentos;
+        window.localStorage.setItem('carrito', JSON.stringify(state.carrito));
+        
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'El código de descuento se añadió correctamente',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+    },
+    deleteCarritoCursoMutation(state, payload) {
+      state.carrito.cursos = state.carrito.cursos.filter(c => c.id !== payload);
+      state.carrito.totalCursos = state.carrito.cursos.reduce((a, b) => a + b.precioActual, 0);
+      state.carrito.totalGeneral = state.carrito.totalCursos - state.carrito.totalDescuentos;
+      window.localStorage.setItem('carrito', JSON.stringify(state.carrito));
+
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'El programa se eliminó correctamente',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    },
     getBeneficiosMutation(state, payload){
       state.beneficios = payload;
     },
     getCursosMutation(state, payload) {
       state.cursos = payload;
     },
-    getCursosSeleccionadosMutation(state) {
-      const cursosSeleccionados = window.localStorage.getItem('cursosSeleccionados');
-      if (cursosSeleccionados !== null) {
-        state.cursosSeleccionados = JSON.parse(cursosSeleccionados);
+    getCarritoMutation(state) {
+      const carrito = window.localStorage.getItem('carrito');
+      if (carrito !== null) {
+        state.carrito = JSON.parse(carrito);
       }
     }
   },
   actions: {
-    agregarCursoAction({commit}, curso) {
-      commit('agregarCursoMutation', curso);
+    agregarCarritoCursoAction({commit}, curso) {
+      commit('agregarCarritoCursoMutation', curso);
+    },
+    agregarCarritoDescuentoAction({commit}, codigo) {
+      db.collection('cuponera').where("codigo", "==", codigo).get()
+      .then(res => {
+        let descuento;
+        res.forEach(doc => {
+          descuento = doc.data();
+          descuento.id = doc.id;
+        })
+        if (descuento)
+        {
+          commit('agregarCarritoDescuentoMutation', descuento);
+        }
+        else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'No se encontró ningún descuento con el código ingresado',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
     },
     createInscripcionAction({commit}, inscripcion) {
       db.collection('inscripciones').add({
@@ -70,6 +143,22 @@ export default new Vuex.Store({
           title: 'Lo sentimos, se produjo un error'
         })
       });
+    },
+    deleteCarritoCursoAction({commit}, curso) {
+      Swal.fire({
+        title: '¿Estas seguro de eliminar el programa?',
+        text: curso.nombre,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#5640ff',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+              commit('deleteCarritoCursoMutation', curso.id);
+            }
+        })
     },
     getBeneficiosAction({commit}) {
       const beneficios = [];
@@ -94,24 +183,8 @@ export default new Vuex.Store({
         })
       })
     },
-    getCursosSeleccionadosAction({commit}) {
-      commit('getCursosSeleccionadosMutation');
-    },
-    setFunctionScrollAction({commit}) {
-      window.onscroll = function() {
-        scrollFunction();
-      };
-
-      function scrollFunction() {
-        let navbar = document.getElementById("navbar");
-          if (document.body.scrollTop > 90 || document.documentElement.scrollTop > 90) {
-            navbar.classList.remove('bg-transparent');
-            navbar.classList.add('bg-dark-pachaqtec');
-          } else {
-            navbar.classList.remove('bg-dark-pachaqtec');
-            navbar.classList.add('bg-transparent');
-          }
-      }
+    getCarritoAction({commit}) {
+      commit('getCarritoMutation');
     }
   },
   modules: {

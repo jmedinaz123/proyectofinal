@@ -13,7 +13,3 @@ export default {
     name: 'ButtonWhatsapp'
 }
 </script>
-
-<style>
-
-</style>

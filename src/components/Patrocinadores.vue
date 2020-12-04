@@ -18,12 +18,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    .footer{
-        min-height: 90px
-    }
-    .bg-dark-pachaqtec {
-        background: #000D29;
-    }
-</style>

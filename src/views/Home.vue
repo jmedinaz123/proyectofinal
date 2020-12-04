@@ -1,6 +1,6 @@
 <template>
   <div>  
-    <Navbar :backgroundTranslate="true" />
+    <Navbar :backgroundTransparent="true" />
     <Header />
     <Patrocinadores />
     <Cursos />

@@ -22,11 +22,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.card-image {
-    min-width: 120px;
-    max-width: 150px;;
-    padding: 2rem;
-}
-</style>

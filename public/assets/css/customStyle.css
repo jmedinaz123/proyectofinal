@@ -1,0 +1,103 @@
+
+.bg-violet {
+    background: #5640ff;
+}
+
+.text-violet {
+    color: #5640ff;
+}   
+
+.banner {
+  height: 25rem;
+  background-image: url('/assets/banner.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.banner-image {
+    margin-left: -210px;
+    margin-top: -130px;
+    margin-bottom: -170px;
+}
+.text-parrafo {
+    font-size: 0.8rem;
+    font-weight: normal;
+}
+
+.footer{
+    min-height: 90px
+}
+.bg-dark-pachaqtec {
+    background: #000D29;
+}
+.card-pq {
+    height: 400px;
+    border: 2px solid ;
+}
+.card-pq:hover {   
+   box-shadow: 0px 0px 4px 2px silver;
+}
+.card-image {
+    min-width: 120px;
+    max-width: 150px;;
+    padding: 2rem;
+}
+.img-pq {
+  width: 100%;
+  height: 100%;
+}
+.img-container-pq {
+  position: relative;
+  padding: 0;
+}
+.list-container {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 1.2rem;
+  list-style: none;
+  padding: 0;
+}
+.list-item {
+  padding: 2px 5px;
+}
+.bg-red {
+  background: red;
+}
+.text-red {
+  color: red;
+}
+.title-6 {
+  font-size: 13px;
+}
+.aero-form {
+    position: fixed;
+    max-width: 370px;
+    min-width: 370px;
+    top: 100px;    
+    background-image: url('/assets/FormMovil.svg');
+}
+
+.aero-button {
+  position: fixed;
+  top: 615px;    
+}
+
+    
+
+@media screen and (max-width: 992px) {
+    .banner-image{
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: -185px;
+        margin-bottom: 1rem;
+    }
+    .aero-form{
+        background-image: none;
+        position: relative;
+        max-width: none;
+        min-width: none;
+        width: 100%;
+        top: 0;
+    }
+};

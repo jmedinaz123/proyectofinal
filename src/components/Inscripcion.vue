@@ -113,28 +113,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.aero-form {
-    position: fixed;
-    max-width: 370px;
-    min-width: 370px;
-    top: 100px;    
-    background-image: url('/assets/FormMovil.svg');
-}
-.aero-button {
-  position: fixed;
-  top: 615px;    
-}
-
-@media screen and (max-width: 992px) {
-    .aero-form{
-        background-image: none;
-        position: relative;
-        max-width: none;
-        min-width: none;
-        width: 100%;
-        top: 0;
-    }
-};
-</style>

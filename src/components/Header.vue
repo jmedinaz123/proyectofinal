@@ -24,12 +24,3 @@ export default {
     name: 'Header'
 }
 </script>
-
-<style>    
-.banner {
-  height: 25rem;
-  background-image: url('/assets/banner.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-</style>
