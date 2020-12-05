@@ -1,9 +1,7 @@
 <template>
     <div class="position-relative w-100">
-        <input type="text" v-model="codigo" class="form-control text-uppercase pr-4" placeholder="Agrega un código de dscto">
-        <button class='btn m-0  position-absolute' style="top:0; right:0" @click.prevent="agregarDescuento()">
-            <img src='/assets/send.svg' alt='send'  >
-        </button>
+        <input type="text" v-model="codigo" class="form-control text-uppercase pr-4" placeholder="Agrega un código de descuento">
+        <img src='/assets/send.svg' alt='send' class="position-absolute"  style="top:11px; right:11px; cursor:pointer" @click.prevent="agregarDescuento()">
     </div>
 </template>
 

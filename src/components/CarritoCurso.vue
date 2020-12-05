@@ -7,7 +7,7 @@
                 <p class="d-none p-0 m-0 d-md-inline-block">{{`S/ ${curso.precioActual}`}}</p>
             </div>
             <div class="w-100 d-flex justify-content-between align-items-end">
-                <p class="d-inline-block p-0 m-0 text-violet" style="cursor:pointer" @click.prevent='deleteCarritoCursoAction(curso)' ><u>Eliminar</u></p>
+                <p class="d-inline-block p-0 m-0 text-violet" title="Eliminar programa" style="cursor:pointer" @click.prevent='deleteCarritoCursoAction(curso)' ><u>Eliminar</u></p>
                 <p class="d-inline-block d-md-none p-0 m-0">{{`S/ ${curso.precioActual}`}}</p>
             </div>
         </div>

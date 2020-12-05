@@ -13,6 +13,11 @@ const routes = [
     path: '/carrito',
     name: 'Carrito',
     component: () => import('../views/Carrito.vue')
+  },
+  {
+    path: "/programa/:nombre", // <- Segmento dinámico
+    name: "Programa",
+    component: () => import('../views/Programa.vue')
   }
 ]
 

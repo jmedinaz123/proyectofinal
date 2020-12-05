@@ -7,6 +7,23 @@
     color: #5640ff;
 }   
 
+.border-violet {
+    border-color: #5640ff !important;
+}   
+
+.btn-violet {
+    background: #5640ff;
+    color: white;
+}  
+.btn-violet:hover{
+  background: #6754f7;
+  color: white !important;
+  cursor: pointer;
+} 
+.btn-violet:disabled{
+  color: white !important;
+}
+
 .banner {
   height: 25rem;
   background-image: url('/assets/banner.png');

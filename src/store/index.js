@@ -16,6 +16,7 @@ export default new Vuex.Store({
       totalDescuestos: 0,
       totalGeneral: 0
     },
+    cursoDetalle: undefined
   },
   mutations: {
     agregarCarritoCursoMutation(state, payload) {
@@ -44,7 +45,7 @@ export default new Vuex.Store({
       }
     },
     agregarCarritoDescuentoMutation(state, payload) {
-      if (state.carrito.cursos.filter(c => c.id === payload.id).length > 0) {
+      if (state.carrito.descuentos.filter(c => c.id === payload.id).length > 0) {
         Swal.fire({
           position: 'top-end',
           icon: 'error',
@@ -82,8 +83,26 @@ export default new Vuex.Store({
         timer: 2000
       })
     },
+    deleteCarritoDescuentoMutation(state, payload) {
+      state.carrito.descuentos = state.carrito.descuentos.filter(d => d.id !== payload);
+      console.log(state.carrito.descuentos);
+      state.carrito.totalDescuentos = state.carrito.descuentos.reduce((a, b) => a + b.descuento, 0);
+      state.carrito.totalGeneral = state.carrito.totalCursos - state.carrito.totalDescuentos;
+      window.localStorage.setItem('carrito', JSON.stringify(state.carrito));
+
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'El descuento se quitó correctamente',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    },
     getBeneficiosMutation(state, payload){
       state.beneficios = payload;
+    },
+    getCursoMutation(state, payload) {
+      state.cursoDetalle = payload;
     },
     getCursosMutation(state, payload) {
       state.cursos = payload;
@@ -160,6 +179,9 @@ export default new Vuex.Store({
             }
         })
     },
+    deleteCarritoDescuentoAction({commit}, descuento_id) {
+      commit('deleteCarritoDescuentoMutation', descuento_id);
+    },
     getBeneficiosAction({commit}) {
       const beneficios = [];
       db.collection('Beneficios').orderBy('nombre').get()
@@ -169,6 +191,33 @@ export default new Vuex.Store({
           commit('getBeneficiosMutation', beneficios);
         })
       })
+    },
+    getCursoAction({commit}, curso_nombre) {
+      commit('getCursoMutation', undefined);
+      db.collection('cursos').where("nombre", "==", curso_nombre).get()
+      .then(res => {
+        let curso_id;
+        res.forEach(doc => {
+          curso_id = doc.id;
+        })
+
+        if (curso_id)
+        {
+          db.collection('cursoDetalle').where("curso_id", "==", curso_id).get()
+          .then(res => {
+            let cursoDetalle;
+            res.forEach(doc => {
+              cursoDetalle = doc.data();
+              cursoDetalle.id = doc.id;
+              
+              commit('getCursoMutation', cursoDetalle);
+            })
+          })
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
     },
     getCursosAction({commit}) {
       const cursos = [];
